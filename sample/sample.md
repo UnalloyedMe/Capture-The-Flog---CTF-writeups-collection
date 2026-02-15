@@ -15,3 +15,7 @@ This is a H3.
 > Ceci est un bloc de citation
 
 `Ceci est un bloc de code `
+
+**Ceci est en gras**
+
+*Ceci est en italique*
