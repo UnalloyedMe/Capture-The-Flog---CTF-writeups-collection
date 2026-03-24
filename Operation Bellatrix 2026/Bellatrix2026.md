@@ -1,13 +1,17 @@
 # Operation Bellatrix 2026 CTF
 Voici le writeup du CTF Bellatrix 2026 "Operation Orion" organisé par COMCYBER en mars 2026.
 
-## Table of Contents
+## Sommaire
 ### Phase 1 - Analyse
 - [Un message d'alerte](#challenge-1)
 - [Trop beau pour être vrai](#challenge-2)
 - [(Dé)-Crédibiliser l'information](#challenge-3)
 - [La vidéo du sauvetage](#challenge-4)
 - [Au service d'une cause](#challenge-5)
+- [Rétablir la véracité des faits](#challenge-6)
+- [Identifier le primo-diffuseur](#challenge-7)
+- [Une metadata vaut mille images](#challenge-8)
+- [Mesurer l'attaque](#challenge-9)
 
 ## Challenge 1
 ### Un message d'alerte
@@ -38,7 +42,18 @@ On essaie donc d'entrer l'url de ce site en tant que flag et ça marche :
 ## Challenge 3
 ### (Dé)-Crédibiliser l'information
 #### OPTIONNEL
-Toujours en rapport avec le blog de désinformation, on doit cette fois-ci trouver les faux experts mentionnés dans les articles, et qui servent d'argument d'autorité pour convaincre les lecteurs de la véracité des propos.
+Toujours en rapport avec le blog de désinformation, on doit cette fois-ci trouver les faux experts mentionnés dans les articles, et qui servent d'argument d'autorité pour convaincre les lecteurs de la véracité des propos. On va donc voir sur l'article qui contient le témoignage d'un "expert" : *EXCLUSIF : L’EXPERTISE ACCABLANTE SUR LE GRIFFON, NOUVEAU BLINDÉ DE L’ARMÉE FRANÇAISE*.
+Il nous est spécifiquement demandé de relever les incohérences concernant ces experts. 
+
+En regardant la description de l'article, on peut voir que le Dr. Pierre Martin est censé être ingénieur dans l'armement, et consultant DPLG :
+>Le Dr. Pierre Martin, ingénieur en armement diplômé de l’école de l’armement du cap d’Agde et consultant **DPLG**, a mené une expertise indépendante sur le VBMR Griffon, nouveau blindé de l’armée française. Ses conclusions sont accablantes.
+
+Et au final, en lisant le rapport d'expertise, on peut y voir que ce fameux *"Pierre Martin"* y est décrit comme consultant OTAN :
+
+![Preuve Pierre Martin](img/preuvemartin.png)
+
+Cette incohérence constitue le flag de ce challenge :
+>BELLATRIX{dplg}
 
 ## Challenge 4
 ### La vidéo du sauvetage 
@@ -72,3 +87,54 @@ Ce n’est pas une attaque contre des civils c’est un abordage. Il semble que 
 On comprend donc, grace à l'article de debunk-officiel-fr que la vidéo représente en fait un abordage par l'armée aquilonienne, qui termine sur le kidnapping de Lynx, contrairement à ce que disaient les précédents articles, qui eux liaient plutot la vidéo à une attaque de l'armée française sur des civils aquiloniens. On peut donc identifier le site `le-mercurien-victorieux.info` comme étant le site à l'origine de la fausse information et on a donc le flag de ce challenge :
 
 >BELLATRIX{le-mercurien-victorieux.info}
+
+## Challenge 6
+### Rétablir la véracité des faits
+On nous demande d'enqueter sur les moyens de relayer les bonnes informations dont le debunk dont on a parlé dans le challenge précédent. Je commence donc à fouiller le fameux site (*https://debunk-officiel-fr.site/*) que l'on avait trouvé, mais en essayant plusieurs formats de flags à partir de ça, cela ne fonctionne pas.
+
+Je finis par revenir sur le site à l'origine de la fake news, et essaie de former un flag avec le nom du commentateur qui relayait la source du débunk :
+>*SoldatFr*
+Cet article est un tissu de mensonge, cette info a été debunké sur https://debunk-officiel-fr.site/ !
+
+et ça marche :
+>BELLATRIX{SoldatFr}
+
+## Challenge 7
+### Identifier le primo-diffuseur
+On nous demande de retrouver l'identité de la personne qui a diffusé la première fausse information.
+Notre regard va naturellement se tourner vers le forum `passion-video.tech` duquel semblait partir la vidéo. On peut voir que celle-ci semble avoir été postée par un certain *marc_v* :
+![Rafale Forum](img/rafaleforum.png)
+
+En recherchant son pseudo sur `global-news-maq` parmis les commentaires de certains blogs, on peut y trouver le commentaire d'un certain Marc Veylanne :
+![Marc Veylanne](img/marcveylanne.png)
+
+On peut d'ailleurs voir qu'il redirige les lecteurs vers son blog personnel et son *Amstramgram*, qui semblent abriter ses opinions politiques et peut-etre encore plus de désinformation.
+
+On essaie son nom en tant que flag et ça valide le challenge :
+>BELLATRIX{Marc_Veylanne}
+
+## Challenge 8
+### Une metadata vaut mille images
+#### OPTIONNEL
+On nous demande ici d'analyser les metadata de l'image venant de l'article *VIDÉO CHOC : UNE PILOTE DE RAFALE RÉCUPÉRÉE EN MER – LA PREUVE QUE CES AVIONS SONT DES PIÈGES VOLANTS !* pour trouver des indices prouvant que celle-ci a été générée par IA. L'image est la suivante :
+![Rafale IA](img/rafaleia.png)
+
+On va donc se rendre sur un site web utilisé pour obtenir les données EXIF et metadata d'une image (`https://exiftools.com` dans mon cas) et on va analyser le résultat.
+
+Le premier indice évident est que la photo est localisée comme ayant été prise à Gravelines, alors qu'elle est sensée avoir été prise au milieu de la mer :
+![Rafale IA GPS](img/rafaleiagps.png)
+
+Le second indice est que la description de l'image ressemble beaucoup à un prompt d'IA :
+>*ImageDescription*
+a photograph of leaked internal document on desk, ultra realistic, 8k, --no watermark
+
+Enfin, on voit que le logiciel utilisé est effectivement un logiciel de génération d'images et de vidéos en Intelligence Artificielle :
+>*Software*
+ComfyUI 0.2.2
+
+Ce logiciel constitue donc notre flag :
+>BELLATRIX{ComfyUI_0.2.2}
+
+## Challenge 9
+### Mesurer l'attaque
+#### OPTIONNEL
