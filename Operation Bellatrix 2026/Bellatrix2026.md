@@ -65,4 +65,10 @@ On se rend donc sur le site et on essaie de trouver un article en rapport avec l
 ![Rafale Forum 2](img/rafaleforum2.png)
 
 L'article semble encore intérpréter différemment les événements de la vidéo, cette fois-ci indiquant que des pêcheurs se sont fait attaquer par l'armée.
-Encore dans les commentaires de l'article, on peut trouver un utilisateur qui dément 
+Encore dans les commentaires de l'article, on peut trouver un utilisateur qui dément l'opinion de l'article :
+>Cet article est un tissu de mensonge, cette info a été debunké sur https://debunk-officiel-fr.site/ !
+Ce n’est pas une attaque contre des civils c’est un abordage. Il semble que Lynx ait été capturée !
+
+On comprend donc, grace à l'article de debunk-officiel-fr que la vidéo représente en fait un abordage par l'armée aquilonienne, qui termine sur le kidnapping de Lynx, contrairement à ce que disaient les précédents articles, qui eux liaient plutot la vidéo à une attaque de l'armée française sur des civils aquiloniens. On peut donc identifier le site `le-mercurien-victorieux.info` comme étant le site à l'origine de la fausse information et on a donc le flag de ce challenge :
+
+>BELLATRIX{le-mercurien-victorieux.info}
