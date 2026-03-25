@@ -2,16 +2,27 @@
 Voici le writeup du CTF Bellatrix 2026 "Operation Orion" organisé par COMCYBER en mars 2026.
 
 ## Sommaire
-### Phase 1 - Analyse
+### Phase 1 - Analysis
 - [Un message d'alerte](#challenge-1)
-- [Trop beau pour être vrai](#challenge-2)
-- [(Dé)-Crédibiliser l'information](#challenge-3)
+- [Trop beau pour être vrai (optionnel)](#challenge-2)
+- [(Dé)-Crédibiliser l'information (optionnel)](#challenge-3)
 - [La vidéo du sauvetage](#challenge-4)
 - [Au service d'une cause](#challenge-5)
 - [Rétablir la véracité des faits](#challenge-6)
 - [Identifier le primo-diffuseur](#challenge-7)
-- [Une metadata vaut mille images](#challenge-8)
-- [Mesurer l'attaque](#challenge-9)
+- [Une metadata vaut mille images (optionnel)](#challenge-8)
+### Phase 2 - Technical
+- [Surveillance du réseau social](#challenge-9)
+- [La piste de l'organisation](#challenge-10)
+- [Fouiller le site](#challenge-11)
+- [Nos réalisations ...](#challenge-12)
+- [La piste du financement](#challenge-13)
+- [Analyse WHOIS des domaines suspects](#challenge-14)
+- [Découverte de preuves cachées (optionnel)](#challenge-15)
+- [Les Wordpress d'Hélène Volquoffe (optionnel)](#challenge-16)
+- [La temporalité de l'attaque (optionnel)](#challenge-17)
+
+# Phase 1 - Analysis
 
 ## Challenge 1
 ### Un message d'alerte
@@ -135,6 +146,111 @@ ComfyUI 0.2.2
 Ce logiciel constitue donc notre flag :
 >BELLATRIX{ComfyUI_0.2.2}
 
+# Phase 2 - Technical
+
 ## Challenge 9
-### Mesurer l'attaque
+### Surveillance du réseau social
+Pour ce challenge, il faut analyser l'historique des postes de Marc Veylanne pour trouver certains de ses contacts. L'objectif est de cartographier ses relations.
+En entrant sur Amstragram, on peut voir un ancien post de Marc mentionnant sa soeur :
+![Marc Veylanne Post Soeur](img/marcvamstramgram.png)
+
+On peut donc commencer à établir certaines de ses relations en commançant donc par sa soeur :
+![Marc Veylanne Soeur](img/spichon.png)
+
+On se sert donc de son nom pour former le flag de ce challenge :
+>BELLATRIX{Sophie_Pichon}
+
+## Challenge 10
+### La piste de l'organisation
+Ce challenge tourne autour de l'utilisation des informations deja récoltées pour savoir si une entreprise aquilonienne se cache derrière Marc ou certains de ses proches.
+
+Dans la description du challenge, on nous conseille d'utiliser le site `https://aquilonie-info-societe.com/` pour trouver des documents d'entreprise mentionnant Marc ou ses proches.
+Dans un premier temps, on recherche évidemment le nom de Marc Veylanne sans résultat.
+Ensuite on cherche le nom de sa soeur, Sophie Pichon, et cette fois-ci on trouve des documents :
+![Sophie Pichon Documents](img/sophiedocuments.png)
+
+Tous les documents mentionnent une société du nom de *Peche fraiche SARL* dont on trouve l'url du site assez rapidement (`https://peche-fraiche.boutique/`) :
+![Peche Fraiche](img/peche%20fraiche.png)
+
+On a donc bien confirmé qu'une société aquilonienne se cache derrière Marc et ses proches.
+On se sert de l'url du site pour valider le challenge :
+>BELLATRIX{peche-fraiche.boutique}
+
+## Challenge 11
+### Fouiller le site
+L'objectif de ce challenge est de trouver des prestataires qui participeraient à la conception du site ou qui feraient partie de la société. On va commencer à fouiller le site, parcourir les offres et les pages d'information (mentions légales, etc) mais on ne trouve pas de mention d'une autre entreprise que *Peche Fraiche*.
+
+Cependant, en allant dans la section *A propos*, on peut y voir la mention de la développeuse du site avec en prime, son site web pro :
+>Dévelopé par Helene Volquoffe, https://quoffe-telephonie.tech/
+
+On peut donc ajouter son nom en tant que flag pour ce challenge :
+>BELLATRIX{Helene_Volquoffe}
+
+## Challenge 12
+### Nos réalisations ...
+Ici, nous devons fouiller les autres sites crées par cette Helene pour voir si on trouve un lien avec les autres sites qu'on a deja visités.
+
+Dans son protfolio, en plus de *Peche Fraiche*, on trouve un site qu'on avait deja visité, et qui diffusait des fausses informations, le *Mercurien Victorieux*. Mais on trouve également un dernier site, également en lien avec *Mercure* :
+![Mercure](img/portfoliohelene.png)
+
+Un site sur Agrid Sokjon !!
+Cela promet d'être interessant mais pour le moment, on entre le nom du site en tant que flag :
+>BELLATRIX{agrid-sokjon.ovh}
+
+## Challenge 13
+### La piste du financement 
+Apparemment un service partenaire aurait une piste sur le site *Peche Fraiche*. Ce serait potentiellement un moyen de financer les différentes campagnes de désinformation ! Mais avant de passer à la suite de l'enquête il nous faut des preuves. L'objectif de ce challenge est donc de fouiller le site pour trouver l'article suspect qui semble être le moyen de communication ou de rémuneration des attaques.
+
+On commence par se créer un compte sur le site avec des informations fictives pour pouvoir commander des articles. On va renseigner une adresse valide (temporaire) pour pouvoir recevoir des mails au cas où.
+
+On commence donc à feuilleter le site à la recherche d'un article suspect. Sauf qu'en surface, le site ne contient rien de visiblement suspect, alors je recherche des termes comme *aquilonie* ou *mercure* et bingo ! Je trouve une veste avec une description très étrange :
+![Article suspect](img/articlesuspect.png)
+
+Je décide donc de la commander et je reçois par mail un descriptif de commande très étrange :
+![Aquilonie Unie](img/aquilonieunie.png)
+
+Cela ressemble fortement à un lien, donc essayons d'aller sur le site et .... voila ! On a enfin découvert le pot aux roses :
+![Site](img/sloganmilice.png)
+
+Et on a en prime le slogan utilisé par la milice, dont on se sert pour former le flag :
+>BELLATRIX{Vigilance_Honneur_Victoire}
+
+## Challenge 14
+### Analyse WHOIS des domaines suspects
+On passe cette fois-ci à l'analyse WHOIS sur les domaines suspects qu'on a identifié jusqu'ici. Une analyse WHOIS consiste en l'utilisation de certains outils pour obtenir des informations sur des domaines comme leur date de création, leur propriétaire ou bien d'autres domaines auxquels elles sont associés, entre autres. On utilise donc l'outil qu'on nous a donné :
+![WHOIS](img/whois.png)
+
+On y entre donc certains domaines qu'on a rencontré pendant le ctf comme `peche-fraiche.boutique`, `agrid-sokjon.ovh`, `aquilonie-unie.org` ou encore `global-news-maq.info`. Pour ces 4 sites, on voit que certaines informations se répétent, notamment :
+>Registrar: Njalla
+>Creation Date: 2024-02-02
+
+qui sont commun aux trois domaines.
+On a donc peut-être trouvé une information capitale concernant la campagne de désinformation...
+
+On utilise donc ces informations dans le flag et on valide :
+>BELLATRIX{Njalla_02022024}
+
+## Challenge 15
+### Découverte de preuves cachées
 #### OPTIONNEL
+Il faut ici fouiller les fichiers *robots.txt* et *sitemap.xml* pour essayer de trouver un script php caché qui nous ouvrirait les portes vers la suite de l'enquête.
+
+En fouillant *sitemap.xml*, on ne trouve rien de vraiment intriguant, juste la liste complète des articles du site et des pages web comme les mentions légales ou autres. En regardant *robots.txt* en revanche, on y voit la mention de pas mal de pages que le créateur du site a voulu déréférencer (rendre inaccessible par les moteurs de recherches) dont une certaine page php :
+>Disallow: /sauvegardes_reduc.php
+
+Quand on s'y rend on voit une étrange page de connexion :
+![Script PHP](img/phpscript.png)
+
+On entre donc l'url de la page en flag :
+>BELLATRIX{sauvegardes_reduc.php}
+
+## Challenge 16
+### Les Wordpress d'Hélène Volquoffe
+#### OPTIONNEL
+
+## Challenge 17
+### La temporalité de l'attaque
+#### OPTIONNEL
+On nous demande ici de classer par ordre chronologique 3 éléments de l'enquête : le post du primo diffuseur, et les deux posts incriminants sur Amstramgram. On commance par rassembler les horodatages de chacun de ces posts :
+![Post Marc V](img/marcvpost.png)
+![Script PHP](img/amstramgramposts.png)
