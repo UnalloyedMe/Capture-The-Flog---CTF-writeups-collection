@@ -19,8 +19,6 @@ Voici le writeup du CTF Bellatrix 2026 "Operation Orion" organisé par COMCYBER 
 - [La piste du financement](#challenge-13)
 - [Analyse WHOIS des domaines suspects](#challenge-14)
 - [Découverte de preuves cachées (optionnel)](#challenge-15)
-- [Les Wordpress d'Hélène Volquoffe (optionnel)](#challenge-16)
-- [La temporalité de l'attaque (optionnel)](#challenge-17)
 
 # Phase 1 - Analysis
 
@@ -243,14 +241,3 @@ Quand on s'y rend on voit une étrange page de connexion :
 
 On entre donc l'url de la page en flag :
 >BELLATRIX{sauvegardes_reduc.php}
-
-## Challenge 16
-### Les Wordpress d'Hélène Volquoffe
-#### OPTIONNEL
-
-## Challenge 17
-### La temporalité de l'attaque
-#### OPTIONNEL
-On nous demande ici de classer par ordre chronologique 3 éléments de l'enquête : le post du primo diffuseur, et les deux posts incriminants sur Amstramgram. On commance par rassembler les horodatages de chacun de ces posts :
-![Post Marc V](img/marcvpost.png)
-![Script PHP](img/amstramgramposts.png)
